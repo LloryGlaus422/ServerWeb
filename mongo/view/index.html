@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Using Mongo</title>
+</head>
+<style>
+    #but1 {
+        margin-left: 45%;
+
+    }
+
+    h2 {
+        font-size: 45px;
+    }
+</style>
+
+<body>
+
+
+    <div class="container">
+        <center>
+            <h2>Shopping List</h2>
+        </center>
+        <!-- Trigger the modal with a button -->
+        <button id="but1" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add
+            Item</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Items</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="item">Item:</label>
+                                <input id=" item" type="name" class="form-control" id="email" placeholder="Input Item"
+                                    name="Item">
+                            </div>
+                            <br><br> <br>
+                            <div class="form-group">
+                                <label for="qty">Quantity:</label>
+                                <input id="qty" type="name" class="form-control" id="pwd" placeholder="Quantity"
+                                    name="qty">
+                            </div>
+                            <br><br> <br>
+                            <div class="form-group">
+                                <label for="prio">Priority:</label>
+                                <input id="prior" type="name" class="form-control" id="pwd" placeholder="Priority"
+                                    name="prio">
+                            </div>
+                            <br> <br><br>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Submit </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container">
+            <h2>List Of Items to purchase</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Items</th>
+                        <th>Quantity</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+      
+            $(document).ready(function () {
+                $("button").click(function () {
+                    var item = $('#item').val
+                    var quantity = $('#qty').val
+                    var pty = $('#prior').val
+                    var url = "/item/create" 
+
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (response) {
+                            for (let index = 0; index != response.length; index++) {
+                                $("#table tbody").append("<tr> <td>" + response[index].item+ "</td> <td>"+ response[index].quantity +"</td> <td>" + response[index].pty + "</td></tr>")
+                            console.log(response[index].item);
+                            }
+                        }
+
+                    });
+                });
+
+            });
+        </script>
+
+</body>
+
+</html>
