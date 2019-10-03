@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -50,7 +50,7 @@
                         <form class="form-inline">
                             <div class="form-group">
                                 <label for="item">Item:</label>
-                                <input id=" item" type="name" class="form-control" id="email" placeholder="Input Item"
+                                <input id="item" type="name" class="form-control" id="email" placeholder="Input Item"
                                     name="Item">
                             </div>
                             <br><br> <br>
@@ -69,7 +69,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Submit </button>
+                        <button type="button" id="sub" class="btn btn-default" data-dismiss="modal">Submit </button>
                     </div>
                 </div>
 
@@ -84,6 +84,7 @@
                         <th>Items</th>
                         <th>Quantity</th>
                         <th>Priority</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,24 +93,23 @@
         </div>
 
         <script>
-      
+
             $(document).ready(function () {
-                $("button").click(function () {
-                    var item = $('#item').val
-                    var quantity = $('#qty').val
-                    var pty = $('#prior').val
-                    var url = "/item/create" 
+                $("#sub").click(function () {
+                    var item = $('#item').val()
+                    var quantity = $('#qty').val()
+                    var pty = $('#prior').val()
+                    var url = "/item/create"
 
                     $.ajax({
-                        type: "GET",
+                        type: "post",
                         url: url,
+                        data: { item: item, quantity: quantity, pty: pty },
                         success: function (response) {
-                            for (let index = 0; index != response.length; index++) {
-                                $("#table tbody").append("<tr> <td>" + response[index].item+ "</td> <td>"+ response[index].quantity +"</td> <td>" + response[index].pty + "</td></tr>")
-                            console.log(response[index].item);
-                            }
-                        }
+                                $("tbody").append("<tr> <td>" + response.item + "</td> <td>" + response.quantity + "</td> <td>" + response.pty + "</td></tr>")
 
+                            
+                        }
                     });
                 });
 
